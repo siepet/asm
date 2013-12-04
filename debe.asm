@@ -21,6 +21,8 @@ start:
 		exit 0		
 		
 liczba:	DB 254
+
+
 napis:	DB "Marcinek", 0
 ; * printing sting **
 print	PROC

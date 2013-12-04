@@ -9,7 +9,7 @@ deci	SEGMENT
 		ASSUME    cs:deci, es:deci, ds:deci, ss:deci
 		ORG    100h
 start:
-		mov ax, 22000								;	max number available: 2559
+		mov ax, 12341								;	max number available: 65535 !!! 0FFFFh !!!!!
 		call deci2
 		call entery
 		
@@ -21,7 +21,7 @@ start:
 
 	; Opis: 	Procedura wypisuje liczbę z rejestru ax w systemie dziesiętnym
 
-	; Wejscie: 	Na wejsciu przyjmowana jest liczba z przedzialu 0...2559 do rejestru ax
+	; Wejscie: 	Na wejsciu przyjmowana jest liczba z przedzialu 0...65535 do rejestru ax
 	
 	; Wyjscie:	Wypisana liczba w systemie dziesietnym
 	
@@ -32,32 +32,46 @@ deci2	PROC
 		; ax = 65535
 		xor dx, dx
 		mov cx, 10000
-		
 		div cx
-		; DX == 5535
-		; AX == 6
-		;mov bl, al
-		; BL == 5
+		; DX = DX:AX % cx ; this case: 5535
+		; AX = DX:AX / cx ; this case: 6
+		; mov ax, 5
+		; 0000 0000 0000 0110
+		; 0000 0000 AH 
+		; 	
+		add al, 48
+		putchar al
+
+				
+		mov ax, dx
+		xor dx, dx
+		mov cx, 1000
+		div cx
+		add al, 48
+		putchar al
+		
+		mov ax, dx
+		xor dx, dx
+		mov cx, 100
+		div cx
+		add al, 48
+		putchar al
+		
+		mov ax, dx
+		xor dx, dx
+		mov cx, 10
+		div cx
+		add al, 48
+		putchar al
+		
+		mov ax, dx
+		xor dx, dx
+		mov cx, 1
+		div cx
 		add al, 48
 		putchar al
 		
 		
-		push ax
-		
-		mov bx, sp
-		mov bx, [bx]
-		
-		mov bx, [sp]
-		
-		mov ax, 5
-		push ax
-		
-		mov bp, sp
-		mov bx, [bp-1]
-		
-		; bx == ax 
-		
-		pop ax
 		pop ax
 		ret
 deci2	ENDP
