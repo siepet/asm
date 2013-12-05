@@ -4,3 +4,5 @@
 *.map
 *.obj
 *.OBJ
+*.EXE
+*.exe
