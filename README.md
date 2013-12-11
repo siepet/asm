@@ -4,7 +4,9 @@
                         At this time, it has only printing numbers in 
                         binary, octal, hexadecimal and decimal to stdout.
                         
-                        
+                        batch.bat script to assemble and link to .com
+			exe.bat   script to assemble and link to .exe
+
                         bin1.asm  prints ax in binary form 
                         oct1.asm  prints ax in octal form
 			hex1.asm  prints ax in hex form
