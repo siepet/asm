@@ -45,6 +45,7 @@ s:
 	sub dl, 48
 	mul cx
 	add ax, dl
+	;lea ax, [ax*10+dl] ; (??) it works?
 	inc si
 	jmp s
 
