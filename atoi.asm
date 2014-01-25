@@ -1,9 +1,10 @@
+; makro wykonujące zwykłe wyjscie z programu używajac funkcji 4C przerwania 21h
 exit	MACRO	k
 	mov ah, 4Ch
 	mov al, k
 	int 21h
 	ENDM
-
+; zamiast używać na okrąglo przerwania 10h, mozna zastąpić to makrem 'putchar'
 putchar	MACRO	k
 	mov ah, 0Eh
 	mov al, k
@@ -15,15 +16,15 @@ AATOI	SEGMENT
 		ORG 100h
 
 start:
-		;mov bx, offset string
-		lea bx, string
-		call atoi
-		call hex
+		;mov bx, offset string	; do bx wrzucany jest offset 'string'
+		lea bx, string		; robi to samo, ale ładniej
+		call atoi		; uruchamiamy funkcje atoi
+		call hex		; wyswietlamy 'string' w postaci heksadecymalnej
 		putchar 10	; enter
 		putchar 13	; enter
 		exit 0
 
-string:	DB	"65535",0				; 3039h
+string:	DB	"65535",0				; 3039h, definiujemy bajty
 			
 ; *****************************************************************
 ;	ASCII TO INTEGER PRODECURE
@@ -35,27 +36,27 @@ string:	DB	"65535",0				; 3039h
 
 
 atoi	PROC
-		mov si, 0
-		xor ax, ax
-		mov cx, 0Ah
-		xor dx, dx
+		mov si, 0		; do rejestru si(source index) ładujemy 0
+		xor ax, ax		; zerujemy rejestr ax
+		mov cx, 0Ah		; do cx wrzucamy 0Ah
+		xor dx, dx		; zerujemy rejestr dx
 
 s:
-		mov dl, [bx+si]			; al == 31
-		cmp dl, 0
-		je k
+		mov dl, [bx+si]			; al == 31, pobieramy 1 znak ze stringu
+		cmp dl, 0			; sprawdzamy czy nie jest 0 dla warunku wyjscia z petli
+		je k				; jesli jest zerem, idziemy do k
 
-		sub dl, 30h				; al == 1			
-		push dx
-		mul cx					; al * 10 == 
-		pop dx
-		
-		add ax, dx
-		inc si		
-		jmp s
+		sub dl, 30h				; al == 1, odejmujemy od dla 30h	
+		push dx					; wrzucamy caly dx na stos, bo mul go zeruje
+		mul cx					; al * 10
+		pop dx					; zabieramy dx ze stosu
+				
+		add ax, dx				; do ax dodajemy dx
+		inc si					; inkrementujemy si
+		jmp s					; i wracamy na poczatek bloku
 
 k:
-		
+							; 
 		ret
 atoi	ENDP
 deci2	PROC
@@ -122,16 +123,16 @@ deci2	ENDP
 
 hex 	PROC 	
 
-		push ax
+		push ax		; pushujemy na stos wszystkie 4 rejestry ogolnego przeznaczenia
 		push bx
 		push cx
 		push dx
 		
-		mov dx,ax
-		mov dx,ax
+		mov dx,ax	; do dx wrzucamy ax
+		mov dx,ax	; do dx wrzucamy ax
 		
-		mov bx,dx
-		shr bx,12
+		mov bx,dx	; do bx, wrzucamy dx
+		shr bx,12	
 		and bx,15
 		mov ax,bx
 		
