@@ -27,16 +27,16 @@ bin 	PROC
 		push bx
 		push cx
 		
-		mov cx, 8
+		mov cx, 8		; wrzucamy 8 z racji tego, ze chcemy wypisac BAJT - 8 bitow
 s:		
-		mov al, 24
-		shl bl,1
-		rcl al,1
-		
+		mov al, 24		; wrzucamy do al 24, z racji tego ze 1*)
+		shl bl,1		; przesuwamy BL w lewo o jeden bit
+		rcl al,1		; 1*) robiac RCL przesuwamy z carry do al wiec 24 z al zmieni się w 48 lub 49
+					; by był znak ascii
 		mov ah,0Eh		;putchar
 		int 10h
 
-		loop s
+		loop s			; loopujemy sobie cx razy
 		
 		pop cx
 		pop bx
