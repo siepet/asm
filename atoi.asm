@@ -57,49 +57,49 @@ s:
 
 k:
 							; 
-		ret
-atoi	ENDP
+		ret					; pobieramy i ładujemy ze stosu CS:IP 
+atoi	ENDP						; koniec procedurki
 deci2	PROC
-		push ax
-		; ax = 65535
-		xor dx, dx
-		mov cx, 10000
-		div cx
+		push ax			; wrzucamy na stos ax
+		; ax = 65535		; w ax jest 65535
+		xor dx, dx		; zerujemy xor, moze byc tez mov dx, 0, w/e
+		mov cx, 10000		; wrzucamy do cx, 1000
+		div cx			; dzielimy ax przez 1000
 		; DX = DX:AX % cx ; this case: 5535
 		; AX = DX:AX / cx ; this case: 6
 		; mov ax, 5
 		; 0000 0000 0000 0110
 		; 0000 0000 AH 
 		; 	
-		add al, 48
-		putchar al
+		add al, 48		; dodajemy do al 48
+		putchar al		; wyswietlamy al na ekran
 
 				
-		mov ax, dx
-		xor dx, dx
-		mov cx, 1000
+		mov ax, dx		; wrzucamy do ax, dx, a w dx była reszta z poprzedniego dzielenia
+		xor dx, dx		; zerujemy dx
+		mov cx, 1000		; do cx wrzucamy 1 000
+		div cx			; dzielimy przez cx 
+		add al, 48		; dodajemy do al 48 by miec znak ASCII
+		putchar al		; wyswietlamy na ekran
+		
+		mov ax, dx		; powtarzamy to samo co wyzej
+		xor dx, dx		
+		mov cx, 100		; z poprawka na cx
 		div cx
 		add al, 48
 		putchar al
 		
-		mov ax, dx
+		mov ax, dx		; powtarzamy to samo co wyzej
 		xor dx, dx
-		mov cx, 100
+		mov cx, 10		; z poprawka na cx
 		div cx
 		add al, 48
 		putchar al
 		
-		mov ax, dx
-		xor dx, dx
-		mov cx, 10
-		div cx
-		add al, 48
-		putchar al
-		
-		mov ax, dx
+		mov ax, dx		; powtarzamy to samo co wyzej
 		xor dx, dx
 		mov cx, 1
-		div cx
+		div cx			; z poprawka na cx
 		add al, 48
 		putchar al
 		
