@@ -17,9 +17,9 @@ PEXE	SEGMENT
 		
 start:
 		
-		mov ax, SEG napis
-		mov ds, ax
-		mov bx, offset napis
+		mov ax, SEG napis				; do ax wrzucamy SEGMENT napisu
+		mov ds, ax					; wrzucamy do DS ax, bo DS:BX tworzy adres danych
+		mov bx, offset napis				; do bx wrzucamy offeset napisu
 		call puts					; 'it breaks'
 									; 'no' wait for it 'yes'
 
@@ -32,15 +32,15 @@ start:
 ;	; w PARZE REJESTROW DS:BX
 ; 	***************************************************
 puts	PROC
-		mov si, 0
+		mov si, 0				; licznik znaku
 		
 a:
-		mov al, [bx+si]
-		cmp al, 0
-		je cd
-		putchar al
-		inc si
-		jmp a
+		mov al, [bx+si]				; drukujemy znak 0 indeksujac od 0, a0, a1, a2... an
+		cmp al, 0				; porownujemy z 0, jako "string terminator" z C null byte
+		je cd					; jesli jest 0 to skaczemy na koniec "cd"
+		putchar al				; jesli nie skoczy to wyswietla to co jest al
+		inc si					; inkrementujemy si
+		jmp a					; skaczemy do a
 cd:
 		
 		ret
