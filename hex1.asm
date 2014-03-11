@@ -34,34 +34,34 @@ start:
 
 hex 	PROC 	
 
-		push ax
+		push ax				; pushujemy 4 rejestry na stos dla beki
 		push bx
 		push cx
 		push dx
 		
-		mov dx,ax
-		mov dx,ax
-		
-		mov bx,dx
-		shr bx,12
-		and bx,15
-		mov ax,bx
-		
-		cmp ax,10
-		jge yyy
-		add al,48
-		sub al, 55
+		mov dx,ax			; do dx wrzucamy ax
+		mov dx,ax			; dwa razy for the lulz XD
+						; 1*)
+		mov bx,dx			; do bx wrzucamy dx
+		shr bx,12			; przesuwamy bx o 12 bitow w prawo
+		and bx,15			; andujemy z FF / 1111 / 15
+		mov ax,bx			; do ax wrzucamy wynik andowania
+				
+		cmp ax,10			; porownujemy ax z 10
+		jge yyy				; jesli jest wieksze skaczemy do yyy
+		add al,48			; dodajemy do al 48
+		sub al, 55			; odejmujemy od al 55
 yyy:
-		add al, 55
+		add al, 55			; dodajemy do al 55
 		
 		mov ah, 0Eh
 		int 10h
 		
-		mov bx,dx
-		shr bx,8
+		mov bx,dx			; powtarzamy krok 1*) z poprawka
+		shr bx,8			; na inne przesuniecie bx
 		and bx,15
-		mov ax,bx
-		
+		mov ax,bx			; wiec program dziala tak samo, robi 4 razy to samo
+						; prostota ogarniecia: poziom very easy
 		cmp ax,10
 		jge yyz
 		add al,48
