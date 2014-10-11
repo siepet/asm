@@ -25,20 +25,20 @@ oct		PROC
 		push cx
 		push dx
 
-		mov cl, 15
-		mov dx, ax
+		mov cl, 15			; do cl wrzucamy poczatkowa wartosc przesuniecia
+		mov dx, ax			; do dx wrzucamy ax, by ax byl glowna zmienna a dx tempem
 
 s:	
-		mov bx,dx
-		shr bx,cl
-		and bx,7
-		mov ax,bx
-		add al,48
-		mov ah, 0Eh
-		int 10h
-		
-		sub cl, 3
-		jnc s
+		mov bx,dx			; do bx wrzucamy dx
+		shr bx,cl			; przesuwamy bx o cl bitow w prawo
+		and bx,7			; andujemy z 7 / 111
+		mov ax,bx			; do ax wrzucamy bx
+		add al,48			; dodemy do al 48
+		mov ah, 0Eh			; putcharujemy
+		int 10h				; ladnie na ekran
+				
+		sub cl, 3			; odejmujemy od cl 3, bo grupujemy cyferki po 3 bo tak rodzi sie osemkowy system
+		jnc s				; jesli nie wyszlo poza 0, czyli nie ma pozyczki skaczemy do s
 		
 		
 		
